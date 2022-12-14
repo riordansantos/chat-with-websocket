@@ -9,13 +9,15 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.2/socket.io.js"
-    integrity="sha512-YybopSVjZU0fe8TY4YDuQbP5bhwpGBE/T6eBUEZ0usM72IWBfWrgVI13qfX4V2A/W7Hdqnm7PIOYOwP9YHnICw=="
-    crossorigin="anonymous"></script>
+        integrity="sha512-YybopSVjZU0fe8TY4YDuQbP5bhwpGBE/T6eBUEZ0usM72IWBfWrgVI13qfX4V2A/W7Hdqnm7PIOYOwP9YHnICw=="
+        crossorigin="anonymous"></script>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+        crossorigin="anonymous" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
     <link rel="stylesheet" href="styles.css">
 
 
@@ -26,189 +28,187 @@
     <div class="container-fluid">
 
         <div class="row linha1">
-          <div class="col-md-12">
-           <h1 class="mt-2"><i class="fas fa-comment"></i> CHAT</h1>
-       </div>
-   </div>
-
-
-   <div class="row linha2">
-    <div class="col-md-12 divL2" onkeypress="handle();">
-
-        <form id="chat">
-            <div class="mb-3">
-                <input type="text" name="username" class="form-control inputusername"  placeholder="Digite seu usuário">
+            <div class="col-md-12">
+                <h1 class="mt-2"><i class="fas fa-comment"></i> CHAT ONLINE</h1>
             </div>
+        </div>
 
-            <div class="messages mb-3"></div>
 
-            <div class="mb-1">
-                <input name="message" class="form-control inputmessage" placeholder="Digite sua mensagem">
-                <button type="submit" class="btn btn-secondary" id="btnEnviar" onclick="execSub()"><i class="fas fa-paper-plane"></i></button>
+        <div class="row linha2">
+            <div class="col-md-12 backgroundMain" onkeypress="handle();">
+
+                <form id="chat">
+                    <div class="mb-4 inputusername">
+                        <input type="text" name="username" class="form-control" placeholder="Digite seu usuário">
+                    </div>
+
+                    <div class="messages mb-3"></div>
+
+                    <div class="mb-1 submitMessage">
+                        <input name="message" class="form-control inputmessage" placeholder="Digite sua mensagem">
+                        <button type="submit" class="btn btn-secondary" id="btnEnviar" onclick="execSub()"><i
+                                class="fas fa-paper-plane"></i></button>
+                    </div>
+
+                </form>
+
             </div>
-
-        </form>
-
+        </div>
     </div>
-</div>
-</div>
 
 
 
-<audio id="audioSend" controls autoplay>
-  <source src="som.mp3" type="audio/mpeg">
-</audio>
+    <audio id="audioSend" controls autoplay>
+        <source src="som.mp3" type="audio/mpeg">
+    </audio>
 
 
 
-<script type="text/javascript">
+    <script type="text/javascript">
 
 
-    $( document ).ready(function() {
+        $(document).ready(function () {
 
-       var socket = io('http://localhost:3000');
-        // var socket = io('http://10.0.0.24:3000');
-       // var socket = io('https://f5b0aacab5ed.ngrok.io');
+            var socket = io('http://localhost:3000');
 
 
-       function renderMessage(message) {
 
-        if($('input[name=username]').val() == message.author){
+            function renderMessage(message) {
 
-            var conteudoHtml = '';
-            conteudoHtml = conteudoHtml + '<div class="message msgcorrenteuser">';
-                conteudoHtml = conteudoHtml + '<div style="width:100%">';
-                    conteudoHtml = conteudoHtml + '<div style="float:left">';
-                        conteudoHtml = conteudoHtml + '<i class="fas fa-user fa-3x" style="font-size: 45px; margin-left: 5px; margin-right: 5px; color: #6c757d;"></i>';
+                if ($('input[name=username]').val() == message.author) {
 
-                    conteudoHtml = conteudoHtml + '</div>';
-                    conteudoHtml = conteudoHtml + '<div>';
-                        conteudoHtml = conteudoHtml + '<div style="float:left; color: #6c757d;"><strong>' + message.author + '</strong></div>';
-                        conteudoHtml = conteudoHtml + '<div style="float: right; margin-right: 5px; font-size:14px">'+ message.hora +'</div>';
-                    conteudoHtml = conteudoHtml + '</div>';
+                    var conteudoHtml = '';
+                    conteudoHtml += '<div class="message msgcorrenteuser">';
+                    conteudoHtml += '<div style="width:100%">';
+                    conteudoHtml += '<div style="float:left">';
+                    conteudoHtml += '<i class="fas fa-user fa-3x" style="font-size: 45px; margin-left: 5px; margin-right: 5px; color: #6c757d;"></i>';
 
-                conteudoHtml = conteudoHtml + '</div>';
-                conteudoHtml = conteudoHtml + '<div style="width:100%"><br>' + message.message + '</div>';
-            conteudoHtml = conteudoHtml + '</div>';
-            
+                    conteudoHtml += '</div>';
+                    conteudoHtml += '<div>';
+                    conteudoHtml += '<div style="float:left; color: #6c757d;"><strong>' + message.author + '</strong></div>';
+                    conteudoHtml += '<div style="float: right; margin-right: 5px; font-size:14px">' + message.hora + '</div>';
+                    conteudoHtml += '</div>';
 
-
-            $('.messages').append(conteudoHtml);
-
-        } else {
+                    conteudoHtml += '</div>';
+                    conteudoHtml += '<div style="width:100%"><br>' + message.message + '</div>';
+                    conteudoHtml += '</div>';
 
 
-            var conteudoHtml = '';
-            conteudoHtml = conteudoHtml + '<div class="message msguser">';
-                conteudoHtml = conteudoHtml + '<div style="width:100%">';
-                    conteudoHtml = conteudoHtml + '<div style="float:left">';
-                        conteudoHtml = conteudoHtml + '<i class="fas fa-user fa-3x" style="font-size: 45px; margin-left: 5px; margin-right: 5px;"></i>';
 
-                    conteudoHtml = conteudoHtml + '</div>';
-                    conteudoHtml = conteudoHtml + '<div>';
-                        conteudoHtml = conteudoHtml + '<div style="float:left"><strong>' + message.author + '</strong></div>';
-                        conteudoHtml = conteudoHtml + '<div style="float: right; margin-right: 5px; font-size:14px">' + message.hora + '</div>';
-                    conteudoHtml = conteudoHtml + '</div>';
+                    $('.messages').append(conteudoHtml);
 
-                conteudoHtml = conteudoHtml + '</div>';
-                conteudoHtml = conteudoHtml + '<div style="width:100%"><br>' + message.message + '</div>';
-            conteudoHtml = conteudoHtml + '</div>';
+                } else {
 
 
-            $('.messages').append(conteudoHtml);
+                    var conteudoHtml = '';
+                    conteudoHtml += '<div class="message msguser">';
+                    conteudoHtml += '<div style="width:100%;">';
+                    conteudoHtml += '<div style="float:left; color: #fff">';
+                    conteudoHtml += '<i class="fas fa-user fa-3x" style="font-size: 45px; margin-left: 5px; margin-right: 5px; color: #fff;"></i>';
 
-        }
+                    conteudoHtml += '</div>';
+                    conteudoHtml += '<div>';
+                    conteudoHtml += '<div style="float:left; color: #fff;"><strong>' + message.author + '</strong></div>';
+                    conteudoHtml += '<div style="float: right; margin-right: 5px; font-size:14px; color: #fff;">' + message.hora + '</div>';
+                    conteudoHtml += '</div>';
 
-
-    }
-    
-    socket.on('previousMessages', function(messages){
-        for (message of messages){
-            renderMessage(message);
-        }
-    })
-
-    socket.on('receivedMessage', function (message) {
-        renderMessage(message);
-        execSub();
-        var audio = document.getElementById('audioSend');
-        audio.play();
-    })
+                    conteudoHtml += '</div>';
+                    conteudoHtml += '<div style="width:100%; color: #fff;"><br>' + message.message + '</div>';
+                    conteudoHtml += '</div>';
 
 
-    $('#chat').submit(function (event) {
-        event.preventDefault();
+                    $('.messages').append(conteudoHtml);
 
-        var author = $('input[name=username]').val();
-        var message = $('input[name=message]').val();
+                }
 
-        var now = new Date
-        var hora = addZeroes(now.getHours(), 2) + ":" + addZeroes(now.getMinutes(),2) + ":" + addZeroes(now.getSeconds(),2); 
 
-        $('input[name=message]').val('');
-        $('input[name=message]').focus();
-
-        if (author.length && message.length) {
-
-            var messageObject = {
-                author: author,
-                message: message,
-                hora: hora
             }
 
-            renderMessage(messageObject);
-            
+            socket.on('previousMessages', function (messages) {
+                for (message of messages) {
+                    renderMessage(message);
+                }
+            })
+
+            socket.on('receivedMessage', function (message) {
+                renderMessage(message);
+                execSub();
+                var audio = document.getElementById('audioSend');
+                audio.play();
+            })
 
 
-            socket.emit('sendMessage', messageObject);
+            $('#chat').submit(function (event) {
+                event.preventDefault();
 
-         
+                var author = $('input[name=username]').val();
+                var message = $('input[name=message]').val();
+
+                var now = new Date
+                var hora = addZeroes(now.getHours(), 2) + ":" + addZeroes(now.getMinutes(), 2) + ":" + addZeroes(now.getSeconds(), 2);
+
+                $('input[name=message]').val('');
+                $('input[name=message]').focus();
+
+                if (author.length && message.length) {
+
+                    var messageObject = {
+                        author: author,
+                        message: message,
+                        hora: hora
+                    }
+
+                    renderMessage(messageObject);
+
+
+
+                    socket.emit('sendMessage', messageObject);
+
+
+
+                }
+
+
+            });
+
+        });
+
+
+        function execSub() {
+
+            $('.messages').animate({ scrollTop: $('.messages')[0].scrollHeight }, 500);
 
         }
 
 
-    });
-
-});
-
-
-    function execSub(){  
-
-        $('.messages').animate({scrollTop: $('.messages')[0].scrollHeight}, 500);
-       
-    }
+        function handle() {
+            var keycode = window.event.keyCode;
+            if (keycode == 13) {
+                $('#btnEnviar').click();
+            }
+        }
 
 
-    function handle()
-    {
-      var keycode = window.event.keyCode;
-      if (keycode == 13)
-      {
-        $('#btnEnviar').click();
-    }
-}
+        function addZeroes(num, len) {
 
+            var numberWithZeroes = String(num);
+            var counter = numberWithZeroes.length;
 
-function addZeroes(num, len) {
+            while (counter < len) {
 
-    var numberWithZeroes = String(num);
-  var counter = numberWithZeroes.length;
-      
-  while(counter < len) {
-  
-      numberWithZeroes = "0" + numberWithZeroes;
-    
-    counter++;
-  
-    }
-  
-  return numberWithZeroes;
+                numberWithZeroes = "0" + numberWithZeroes;
 
-}
+                counter++;
+
+            }
+
+            return numberWithZeroes;
+
+        }
 
 
 
-</script>
+    </script>
 
 </body>
 

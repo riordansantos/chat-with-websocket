@@ -30,6 +30,5 @@ io.on('connection', socket => {
     })
 })
 
-// server.listen(3000, '10.0.0.24');
 server.listen(3000);
 
