@@ -9,6 +9,5 @@
 - Start the server running `yarn start`.
 - Open your browser in `http://localhost:3000`.
 - Enter your username to be able to write a message.
+![alt text](public/Chat.png)
 
-# References 
-# Links
